@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Vessel Management System</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .monitor-point {
+            cursor: pointer;
+            font: inherit;
+            color: inherit;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .monitor-point:hover {
+            transform: scale(1.06);
+        }
+
+        .monitor-point:focus-visible {
+            outline: 3px solid #36a9ff;
+            outline-offset: 3px;
+        }
+
+        .equipment-details {
+            margin: 24px 0;
+            padding: 22px;
+            border: 1px solid #3699cc;
+            border-radius: 14px;
+            background: #102435;
+            color: white;
+        }
+
+        .equipment-details[hidden] {
+            display: none;
+        }
+
+        .equipment-details-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .equipment-reading,
+        .equipment-action {
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .equipment-reading p {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .close-button {
+            cursor: pointer;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 7px;
+        }
+
+        .demo-note {
+            display: block;
+            margin-top: 12px;
+            opacity: 0.8;
+        }
+
+        .equipment-details button {
+            color: #102435;
+        }
+
+        .ai-load-control {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(54, 153, 204, 0.12);
+        }
+
+        .ai-load-control label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .ai-load-control input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #36a9ff;
+        }
+
+        .ai-load-values {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        #aiTemperature {
+            overflow-wrap: anywhere;
+        }
+
+        .analysis-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 8px 0;
+            overflow-wrap: anywhere;
+        }
+
+        #comparisonMessage {
+            display: block;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🚢 Intelligent Vessel Management System</h1>
+        <p>Deep Learning-Based Vessel Operations &amp; Marine Engineering Management</p>
+    </header>
+
+    <main>
+        <!-- VESSEL MONITORING -->
+        <section class="vessel-section">
+            <div class="vessel-title">🚢 LIVE VESSEL MONITORING</div>
+
+            <div class="ship-display">
+                <div class="ship-icon">🚢</div>
+
+                <button type="button"
+                        class="monitor-point engine-point"
+                        onclick="showEquipment('engine')">
+                    ⚙️ Main Engine
+                </button>
+
+                <button type="button"
+                        class="monitor-point fuel-point"
+                        onclick="showEquipment('fuel')">
+                    ⛽ Fuel System
+                </button>
+
+                <button type="button"
+                        class="monitor-point cooling-point"
+                        onclick="showEquipment('cooling')">
+                    🌡️ Cooling System
+                </button>
+
+                <button type="button"
+                        class="monitor-point pump-point"
+                        onclick="showEquipment('pump')">
+                    💧 Water Pump
+                </button>
+            </div>
+        </section>
+
+        <!-- EQUIPMENT DETAILS -->
+        <section id="equipmentDetails"
+                 class="equipment-details"
+                 hidden>
+            <div class="equipment-details-header">
+                <h2 id="equipmentTitle">Equipment Details</h2>
+
+                <button type="button"
+                        class="close-button"
+                        onclick="closeEquipment()">
+                    ✖ Close
+                </button>
+            </div>
+
+            <p id="equipmentDescription"></p>
+
+            <div class="equipment-reading">
+                <h3>Current Reading</h3>
+                <p id="equipmentReading">--</p>
+                <span id="equipmentCondition">Waiting for data</span>
+            </div>
+
+            <div class="equipment-action">
+                <h3>Recommended Action</h3>
+                <p id="equipmentPrecaution"></p>
+            </div>
+
+            <small class="demo-note">
+                Demonstration using simulated data.
+                Not intended for real-vessel operation.
+            </small>
+        </section>
+
+        <!-- SENSOR DASHBOARD -->
+        <section class="dashboard">
+
+            <div class="card">
+                <h2>🌡️ Engine Temperature</h2>
+                <p id="temperature">85 °C</p>
+                <span id="temperatureStatus">Normal</span>
+            </div>
+
+            <div class="card">
+                <h2>⛽ Fuel Consumption</h2>
+                <p id="fuel">120 L/hr</p>
+                <span id="fuelStatus">Stable</span>
+            </div>
+
+            <div class="card">
+                <h2>⚙️ Equipment Health</h2>
+                <p id="health">85%</p>
+                <span id="healthStatus">Good</span>
+            </div>
+
+            <div class="card">
+                <h2>⚠️ Failure Risk</h2>
+                <p id="risk">Low</p>
+                <span id="riskStatus">System Safe</span>
+            </div>
+
+            <!-- AI TEMPERATURE PREDICTION -->
+            <div class="card">
+                <h2>🤖 AI Temperature Prediction</h2>
+
+                <p id="aiTemperature">Loading...</p>
+                <span id="aiStatus">Connecting to AI model...</span>
+
+                <small class="demo-note">
+                    Demonstration model trained using simulated data.
+                    Predictions are not validated for real-vessel use.
+                </small>
+
+                <p>
+                    Engine load:
+                    <strong id="aiEngineLoad">75%</strong>
+                </p>
+
+                <!-- ENGINE LOAD SLIDER -->
+                <div class="ai-load-control">
+                    <label for="engineLoadSlider">
+                        Adjust simulated engine load
+                    </label>
+
+                    <input
+                        type="range"
+                        id="engineLoadSlider"
+                        min="0"
+                        max="100"
+                        value="75"
+                        step="5"
+                    >
+
+                    <div class="ai-load-values">
+                        <span>0%</span>
+                        <strong id="engineLoadSliderValue">75%</strong>
+                        <span>100%</span>
+                    </div>
+
+                    <small class="demo-note">
+                        Move the slider to request a new AI prediction.
+                    </small>
+                </div>
+            </div>
+
+            <!-- AI ENGINE ANALYSIS -->
+            <div class="card">
+                <h2>📊 AI Engine Analysis</h2>
+
+                <p>Current Sensor Temperature</p>
+                <p class="analysis-value" id="comparisonSensorTemp">
+                    -- °C
+                </p>
+
+                <p>AI-Predicted Temperature</p>
+                <p class="analysis-value" id="comparisonAITemp">
+                    -- °C
+                </p>
+
+                <p>Absolute Difference</p>
+                <p class="analysis-value" id="temperatureDifference">
+                    -- °C
+                </p>
+
+                <span id="comparisonMessage">
+                    Waiting for sensor and AI data...
+                </span>
+
+                <small class="demo-note">
+                    This is a comparison of simulated sensor data and
+                    a model estimate. It does not establish real-world
+                    prediction accuracy.
+                </small>
+            </div>
+
+        </section>
+
+        <!-- SYSTEM STATUS -->
+        <section class="system-status">
+            <h2>System Status</h2>
+            <p id="systemStatus">
+                🟢 All Systems Operating Normally
+            </p>
+        </section>
+
+        <!-- ALERTS -->
+        <section class="alerts">
+            <h2>🚨 Alerts &amp; Notifications</h2>
+            <div id="alertBox">No active alerts</div>
+        </section>
+
+        <!-- SENSOR SIMULATION CONTROLS -->
+        <section class="controls">
+            <h2>Sensor Simulation</h2>
+
+            <button type="button" onclick="normalMode()">
+                Normal Condition
+            </button>
+
+            <button type="button" onclick="warningMode()">
+                Test Warning
+            </button>
+
+            <button type="button" onclick="criticalMode()">
+                Test Critical Alert
+            </button>
+
+            <br><br>
+
+            <button type="button" onclick="playWarningSound()">
+                🟠 Test Warning Sound
+            </button>
+
+            <button type="button" onclick="playHighAlarm()">
+                🔴 Test High Sound
+            </button>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            AI-Based Marine Engineering Monitoring System
+            | Project ID: 129
+        </p>
+    </footer>
+
+    <!-- EXISTING SENSOR AND ALERT FUNCTIONS -->
+    <script src="script.js"></script>
+
+    <!-- EQUIPMENT DETAILS -->
+    <script>
+        const equipmentInfo = {
+            engine: {
+                title: "⚙️ Main Engine Monitoring",
+                description:
+                    "Monitor engine temperature and review engine operating conditions.",
+                readingId: "temperature",
+                unit: " °C",
+                conditionId: "temperatureStatus",
+                action:
+                    "If overheating is detected, inspect coolant level and cooling-water circulation."
+            },
+
+            fuel: {
+                title: "⛽ Fuel System Monitoring",
+                description:
+                    "Monitor simulated fuel consumption and identify unusual increases.",
+                readingId: "fuel",
+                unit: " L/hr",
+                conditionId: "fuelStatus",
+                action:
+                    "If consumption rises unexpectedly, compare it with engine load and inspect the fuel system."
+            },
+
+            cooling: {
+                title: "🌡️ Cooling System Monitoring",
+                description:
+                    "Review engine temperature as an indicator relevant to cooling performance.",
+                readingId: "temperature",
+                unit: " °C engine temperature",
+                conditionId: "temperatureStatus",
+                action:
+                    "If engine temperature becomes high, check coolant level, circulation and cooling-water pump operation."
+            },
+
+            pump: {
+                title: "💧 Water Pump Monitoring",
+                description:
+                    "Review pump-related monitoring and possible water-circulation problems.",
+                readingId: null,
+                unit: "",
+                conditionId: null,
+                action:
+                    "Check pump operation, flow and pressure. Dedicated pump measurements are not currently provided by the simulated backend."
+            }
+        };
+
+        function showEquipment(type) {
+            const info = equipmentInfo[type];
+
+            if (!info) {
+                return;
+            }
+
+            document.getElementById("equipmentTitle").textContent =
+                info.title;
+
+            document.getElementById("equipmentDescription").textContent =
+                info.description;
+
+            let reading = "Not available";
+            let condition = "No sensor configured";
+
+            if (info.readingId) {
+                const readingElement =
+                    document.getElementById(info.readingId);
+
+                if (readingElement) {
+                    reading = readingElement.textContent
+                        .replace("°C", "")
+                        .replace("L/hr", "")
+                        .trim();
+                }
+            }
+
+            if (info.conditionId) {
+                const conditionElement =
+                    document.getElementById(info.conditionId);
+
+                if (conditionElement) {
+                    condition = conditionElement.textContent;
+                }
+            }
+
+            document.getElementById("equipmentReading").textContent =
+                info.readingId ? reading + info.unit : "Not available";
+
+            document.getElementById("equipmentCondition").textContent =
+                condition;
+
+            document.getElementById("equipmentPrecaution").textContent =
+                info.action;
+
+            const panel =
+                document.getElementById("equipmentDetails");
+
+            panel.hidden = false;
+
+            panel.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        function closeEquipment() {
+            document.getElementById("equipmentDetails").hidden = true;
+        }
+    </script>
+
+    <!-- AI BACKEND CONNECTION AND ANALYSIS -->
+    <script>
+        let currentEngineLoad = 75;
+        let predictionRequestNumber = 0;
+
+        const aiTemperatureElement =
+            document.getElementById("aiTemperature");
+
+        const aiStatusElement =
+            document.getElementById("aiStatus");
+
+        const aiEngineLoadElement =
+            document.getElementById("aiEngineLoad");
+
+        const engineLoadSlider =
+            document.getElementById("engineLoadSlider");
+
+        const engineLoadSliderValue =
+            document.getElementById("engineLoadSliderValue");
+
+        // Compare simulated sensor temperature with AI prediction.
+        function updateAIComparison() {
+            const sensorText =
+                document.getElementById("temperature").textContent;
+
+            const aiText =
+                document.getElementById("aiTemperature").textContent;
+
+            const sensorTemp = parseFloat(sensorText);
+            const aiTemp = parseFloat(aiText);
+
+            const sensorOutput =
+                document.getElementById("comparisonSensorTemp");
+
+            const aiOutput =
+                document.getElementById("comparisonAITemp");
+
+            const differenceOutput =
+                document.getElementById("temperatureDifference");
+
+            const messageOutput =
+                document.getElementById("comparisonMessage");
+
+            // Check whether both readings are available.
+            if (
+                !Number.isFinite(sensorTemp) ||
+                !Number.isFinite(aiTemp)
+            ) {
+                sensorOutput.textContent = "-- °C";
+                aiOutput.textContent = "-- °C";
+                differenceOutput.textContent = "-- °C";
+
+                messageOutput.textContent =
+                    "Waiting for valid sensor and AI data...";
+
+                return;
+            }
+
+            // Calculate the absolute temperature difference.
+            const difference = Math.abs(sensorTemp - aiTemp);
+
+            sensorOutput.textContent =
+                sensorTemp.toFixed(2) + " °C";
+
+            aiOutput.textContent =
+                aiTemp.toFixed(2) + " °C";
+
+            differenceOutput.textContent =
+                difference.toFixed(2) + " °C";
+
+            // NEW: Show a meaningful message based on the difference.
+            // These are demonstration thresholds, not safety standards.
+            if (difference >= 20) {
+                messageOutput.textContent =
+                    "Large difference detected between the simulated sensor " +
+                    "reading and AI estimate. Review both readings.";
+
+            } else if (difference >= 10) {
+                messageOutput.textContent =
+                    "Moderate difference detected. Continue monitoring " +
+                    "and review the simulated readings.";
+
+            } else {
+                messageOutput.textContent =
+                    "The simulated sensor reading and AI estimate are close. " +
+                    "This does not confirm model accuracy.";
+            }
+        }
+
+        // Request a prediction from the Flask backend.
+        async function updateAIPrediction() {
+            const requestNumber = ++predictionRequestNumber;
+            const requestedLoad = currentEngineLoad;
+
+            aiStatusElement.textContent =
+                "Requesting AI prediction...";
+
+            try {
+                const url =
+                    "http://127.0.0.1:5000/ai-prediction?engine_load=" +
+                    encodeURIComponent(requestedLoad);
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(
+                        "AI endpoint returned status " + response.status
+                    );
+                }
+
+                const data = await response.json();
+
+                // Ignore old responses if the slider has moved again.
+                if (requestNumber !== predictionRequestNumber) {
+                    return;
+                }
+
+                if (
+                    typeof data.predicted_engine_temperature !== "number" ||
+                    typeof data.engine_load !== "number"
+                ) {
+                    throw new Error("AI response data is invalid");
+                }
+
+                aiTemperatureElement.textContent =
+                    data.predicted_engine_temperature.toFixed(2) + " °C";
+
+                aiEngineLoadElement.textContent =
+                    data.engine_load + "%";
+
+                aiStatusElement.textContent =
+                    "AI prediction updated successfully";
+
+                // Refresh the comparison with the new prediction.
+                updateAIComparison();
+
+            } catch (error) {
+                if (requestNumber !== predictionRequestNumber) {
+                    return;
+                }
+
+                aiTemperatureElement.textContent = "-- °C";
+
+                aiStatusElement.textContent =
+                    "AI connection unavailable";
+
+                updateAIComparison();
+
+                console.error("AI prediction error:", error);
+            }
+        }
+
+        // Update the engine load when the slider moves.
+        function changeEngineLoad(value) {
+            currentEngineLoad = Number(value);
+
+            engineLoadSliderValue.textContent =
+                currentEngineLoad + "%";
+
+            aiEngineLoadElement.textContent =
+                currentEngineLoad + "%";
+
+            updateAIPrediction();
+        }
+
+        // Listen for slider movement.
+        engineLoadSlider.addEventListener("input", function () {
+            changeEngineLoad(this.value);
+        });
+
+        // Get the first AI prediction when the page loads.
+        updateAIPrediction();
+
+        // Refresh the comparison every second.
+        setInterval(updateAIComparison, 1000);
+
+        // Refresh the AI prediction every 10 seconds.
+        setInterval(function () {
+            updateAIPrediction();
+        }, 10000);
+    </script>
+</body>
+</html>
+/* TEMPORARY DASHBOARD STYLE TEST */
+.dashboard .card {
+    background: white !important;
+    color: #163447 !important;
+    border: 1px solid #2788a6 !important;
+    border-left: 5px solid #2788a6 !important;
+    border-radius: 14px !important;
+    padding: 22px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}

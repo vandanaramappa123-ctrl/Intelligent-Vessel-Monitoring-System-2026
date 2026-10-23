@@ -1,0 +1,881 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eaf3f7;
+    color: #163447;
+}
+
+
+header {
+    background: linear-gradient(135deg, #082c43, #145b78);
+    color: white;
+    padding: 28px 40px;
+    border-bottom: 4px solid #37a9c9;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+header p {
+    font-size: 15px;
+    opacity: 0.85;
+}
+
+
+
+main {
+    max-width: 1250px;
+    margin: 28px auto;
+    padding: 0 25px;
+}
+
+
+
+.vessel-section {
+    position: relative;
+    min-height: 360px;
+    margin-bottom: 25px;
+
+    background: linear-gradient(
+        to bottom,
+        #d9f0f7 0%,
+        #b9dfe9 65%,
+        #75b7c9 65%,
+        #4b9aae 100%
+    );
+
+    border-radius: 18px;
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Vessel title */
+
+.vessel-title {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+
+    background: rgba(8, 44, 67, 0.92);
+    color: white;
+
+    padding: 11px 17px;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    z-index: 10;
+}
+
+
+
+.ship-display {
+    position: relative;
+    width: 100%;
+    height: 360px;
+}
+
+.ship-icon {
+    position: absolute;
+
+    left: 50%;
+    top: 45%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 150px;
+
+    filter: drop-shadow(0 8px 5px rgba(0, 0, 0, 0.25));
+
+    z-index: 5;
+}
+
+
+
+.monitor-point {
+    position: absolute;
+
+    background: white;
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+    z-index: 8;
+}
+
+
+
+.engine-point {
+    left: 12%;
+    top: 38%;
+}
+
+
+
+.fuel-point {
+    right: 12%;
+    top: 38%;
+}
+
+
+
+.cooling-point {
+    left: 15%;
+    bottom: 15%;
+}
+
+
+
+.pump-point {
+    right: 15%;
+    bottom: 15%;
+}
+
+
+
+.dashboard {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.card {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    border-left: 5px solid #2788a6;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 29px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.card span {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+
+.system-status {
+    background: white;
+
+    margin-top: 22px;
+    padding: 22px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.system-status h2 {
+    margin-bottom: 12px;
+}
+
+#systemStatus {
+    font-weight: bold;
+}
+
+
+
+.alerts {
+    background: white;
+
+    margin-top: 22px;
+    padding: 22px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.alerts h2 {
+    margin-bottom: 15px;
+}
+
+#alertBox {
+    padding: 15px;
+
+    background: #edf8f1;
+
+    border-left: 5px solid #35a66b;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+
+
+.controls {
+    background: white;
+
+    margin-top: 22px;
+    padding: 22px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.controls h2 {
+    margin-bottom: 17px;
+}
+
+button {
+    border: none;
+
+    padding: 12px 18px;
+
+    margin-right: 8px;
+
+    margin-bottom: 5px;
+
+    border-radius: 8px;
+
+    background: #123e57;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #2788a6;
+
+    transform: translateY(-2px);
+}
+
+
+
+footer {
+    margin-top: 35px;
+
+    padding: 22px;
+
+    text-align: center;
+
+    background: #082c43;
+
+    color: white;
+
+    font-size: 13px;
+}
+
+
+@media (max-width: 950px) {
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ship-icon {
+        font-size: 120px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 22px;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .ship-icon {
+        font-size: 90px;
+    }
+
+    .monitor-point {
+        font-size: 11px;
+        padding: 7px 9px;
+    }
+
+    .engine-point {
+        left: 3%;
+    }
+
+    .fuel-point {
+        right: 3%;
+    }
+
+    .cooling-point {
+        left: 3%;
+    }
+
+    .pump-point {
+        right: 3%;
+    }
+}
+/* Clickable equipment buttons */
+.monitor-point {
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.monitor-point:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 170, 255, 0.4);
+}
+
+.monitor-point:focus-visible {
+    outline: 3px solid #36a9ff;
+    outline-offset: 3px;
+}
+
+/* Equipment details panel */
+.equipment-details {
+    margin: 24px 0;
+    padding: 22px;
+    border: 1px solid #3699cc;
+    border-radius: 14px;
+    background: #102435;
+    color: #ffffff;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+.equipment-details[hidden] {
+    display: none;
+}
+
+.equipment-details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.equipment-details h2 {
+    margin-top: 0;
+}
+
+.equipment-reading,
+.equipment-action {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.equipment-reading p {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.equipment-action p {
+    line-height: 1.6;
+}
+
+.close-button {
+    cursor: pointer;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 7px;
+}
+/* TEMPORARY DASHBOARD STYLE TEST */
+.dashboard .card {
+    background: white !important;
+    color: #163447 !important;
+    border: 1px solid #2788a6 !important;
+    border-left: 5px solid #2788a6 !important;
+    border-radius: 14px !important;
+    padding: 22px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== REVIEW 3: PROFESSIONAL MARINE DASHBOARD ===== */
+
+:root {
+    --marine-bg: #071827;
+    --marine-panel: #10283b;
+    --marine-panel-light: #16364c;
+    --marine-cyan: #43d9f5;
+    --marine-text: #edf7fc;
+    --marine-muted: #a9c1d0;
+    --marine-border: rgba(112, 190, 220, 0.22);
+}
+
+body {
+    background: var(--marine-bg);
+    color: var(--marine-text);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+header {
+    background: linear-gradient(135deg, #0c3049, #075b78);
+    color: white;
+    padding: 28px 20px;
+    border-bottom: 2px solid var(--marine-cyan);
+    box-shadow: 0 5px 24px rgba(0, 0, 0, 0.25);
+}
+
+header p {
+    color: #c6eaf5;
+}
+
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 26px;
+}
+
+.vessel-section,
+.system-status,
+.alerts,
+.controls,
+.equipment-details {
+    background: var(--marine-panel);
+    color: var(--marine-text);
+    border: 1px solid var(--marine-border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.vessel-title {
+    color: var(--marine-cyan);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.dashboard .card {
+    background: linear-gradient(145deg, var(--marine-panel-light), var(--marine-panel));
+    color: var(--marine-text);
+    border: 1px solid var(--marine-border);
+    border-top: 3px solid var(--marine-cyan);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    min-width: 0;
+}
+
+.dashboard .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--marine-cyan);
+}
+
+.dashboard .card h2 {
+    color: #d8f5ff;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.dashboard .card > p:first-of-type {
+    color: var(--marine-cyan);
+    font-size: 1.8rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.dashboard .card span {
+    color: #a9edc5;
+}
+
+.system-status p,
+#alertBox {
+    background: rgba(67, 217, 245, 0.08);
+    border: 1px solid var(--marine-border);
+    border-radius: 10px;
+    padding: 14px;
+    line-height: 1.6;
+}
+
+.controls button,
+.equipment-details button {
+    margin: 6px 5px 6px 0;
+    padding: 11px 16px;
+    border: 1px solid var(--marine-cyan);
+    border-radius: 8px;
+    background: #0d6684;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.controls button:hover,
+.equipment-details button:hover {
+    background: #1284a5;
+}
+
+.ai-load-control {
+    background: rgba(67, 217, 245, 0.07);
+    border: 1px solid var(--marine-border);
+    border-radius: 10px;
+}
+
+.demo-note {
+    color: var(--marine-muted);
+    line-height: 1.5;
+}
+
+footer {
+    background: #04111d;
+    color: var(--marine-muted);
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid var(--marine-border);
+}
+
+@media (max-width: 950px) {
+    .dashboard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 14px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ===== FIX WARNING AND PRECAUTION VISIBILITY ===== */
+
+#alertBox {
+    background-color: #fff3cd !important;
+    color: #664d03 !important;
+    border: 2px solid #ffbf47 !important;
+    padding: 16px !important;
+    border-radius: 10px !important;
+    font-weight: 600;
+}
+
+#alertBox * {
+    color: #664d03 !important;
+}
+
+.equipment-details {
+    background-color: #ffffff !important;
+    color: #163447 !important;
+}
+
+.equipment-details h2,
+.equipment-details h3,
+.equipment-details p,
+.equipment-details li,
+.equipment-details strong,
+.equipment-details span {
+    color: #163447 !important;
+}
+
+.equipment-details .warning,
+.equipment-details .precaution {
+    background-color: #fff3cd !important;
+    color: #664d03 !important;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.system-status {
+    color: #ffffff !important;
+}
+
+.system-status h2,
+.system-status h3,
+.system-status p,
+.system-status span {
+    color: #ffffff !important;
+}
+
+/* Make warning and critical messages easy to notice */
+#alertBox.warning,
+#alertBox.critical,
+#alertBox.danger {
+    background-color: #ffe2e2 !important;
+    color: #8b1111 !important;
+    border-color: #dc3545 !important;
+}
+
+#alertBox.warning *,
+#alertBox.critical *,
+#alertBox.danger * {
+    color: #8b1111 !important;
+}
+
+/* ===== READABILITY FIX FOR REVIEW 3 ===== */
+
+/* General text */
+body {
+    color: #edf7fc;
+}
+
+/* AI analysis, prediction and monitoring text */
+.dashboard .card,
+.dashboard .card p,
+.dashboard .card label,
+.dashboard .card strong,
+.dashboard .card small {
+    color: #edf7fc;
+}
+
+/* Keep important dashboard readings bright */
+.dashboard .card > p:first-of-type {
+    color: #43d9f5 !important;
+}
+
+/* Warning and notification panel */
+#alertBox {
+    background: #fff3cd !important;
+    color: #664d03 !important;
+    border: 2px solid #ffbf47 !important;
+    border-radius: 10px;
+    padding: 16px;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+#alertBox * {
+    color: #664d03 !important;
+}
+
+/* System status */
+.system-status {
+    background: #10283b;
+    color: #ffffff;
+}
+
+.system-status h2,
+.system-status h3,
+.system-status p,
+.system-status strong {
+    color: #ffffff;
+    line-height: 1.7;
+}
+
+/* Equipment details and precautions */
+.equipment-details {
+    background: #ffffff !important;
+    color: #163447 !important;
+}
+
+.equipment-details h2,
+.equipment-details h3,
+.equipment-details p,
+.equipment-details li,
+.equipment-details strong,
+.equipment-details span {
+    color: #163447 !important;
+    line-height: 1.7;
+}
+
+/* AI comparison message */
+#comparisonMessage,
+#aiComparisonMessage,
+#differenceMessage {
+    color: #ffffff;
+    line-height: 1.7;
+    font-weight: 600;
+}
+
+/* Warning / critical text remains readable */
+.warning,
+.critical,
+.danger {
+    line-height: 1.7;
+}
+
+/* ===== FINAL FIX: DASHBOARD TEXT VISIBILITY ===== */
+
+/* Make all dashboard cards dark with readable text */
+.dashboard .card {
+    background: linear-gradient(145deg, #16364c, #10283b) !important;
+    color: #f1f8fc !important;
+    border: 1px solid #28718c !important;
+    border-top: 3px solid #43d9f5 !important;
+    border-radius: 14px;
+}
+
+/* Card headings and descriptions */
+.dashboard .card h1,
+.dashboard .card h2,
+.dashboard .card h3,
+.dashboard .card p,
+.dashboard .card label,
+.dashboard .card strong,
+.dashboard .card small,
+.dashboard .card div {
+    color: #edf7fc;
+}
+
+/* Main readings */
+.dashboard .card > p:first-of-type {
+    color: #43d9f5 !important;
+    font-weight: 700;
+}
+
+/* AI load slider area */
+.ai-load-control {
+    background: #193f56 !important;
+    color: #ffffff !important;
+}
+
+.ai-load-control p,
+.ai-load-control label,
+.ai-load-control span,
+.ai-load-control strong {
+    color: #edf7fc !important;
+}
+
+/* Equipment buttons around the ship */
+.vessel-section button,
+.vessel-section .monitor-point,
+.monitor-point {
+    background: #ffffff !important;
+    color: #163447 !important;
+    border: 1px solid #43d9f5;
+}
+
+.vessel-section button *,
+.monitor-point * {
+    color: #163447 !important;
+}
+
+/* Warning message */
+#alertBox {
+    background: #fff3cd !important;
+    color: #664d03 !important;
+    border: 2px solid #ffbf47 !important;
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+#alertBox * {
+    color: #664d03 !important;
+}
+
+/* Equipment precautions */
+.equipment-details {
+    background: #ffffff !important;
+    color: #163447 !important;
+}
+
+.equipment-details h2,
+.equipment-details h3,
+.equipment-details p,
+.equipment-details li,
+.equipment-details strong,
+.equipment-details span {
+    color: #163447 !important;
+    line-height: 1.7;
+}
+
+/* ===== EQUIPMENT MONITORING POPUP ===== */
+
+.equipment-details {
+    background: #ffffff !important;
+    color: #163447 !important;
+    border: 2px solid #43d9f5 !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    line-height: 1.7;
+}
+
+.equipment-details h2,
+.equipment-details h3 {
+    color: #075b78 !important;
+    font-weight: 700;
+}
+
+.equipment-details p,
+.equipment-details li,
+.equipment-details strong,
+.equipment-details span,
+.equipment-details div {
+    color: #163447 !important;
+    line-height: 1.7;
+}
+
+.equipment-details button {
+    background: #075b78 !important;
+    color: #ffffff !important;
+    border: 1px solid #075b78 !important;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.equipment-details button:hover {
+    background: #0d789b !important;
+}
+
+/* Highlight the recommended action */
+.equipment-details .precaution,
+.equipment-details .warning {
+    background: #fff3cd !important;
+    color: #664d03 !important;
+    padding: 12px !important;
+    border-radius: 8px;
+    border-left: 4px solid #ffbf47;
+}
